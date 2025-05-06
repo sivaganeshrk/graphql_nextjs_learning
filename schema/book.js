@@ -6,6 +6,8 @@ export default gql`
     description: String
     published_date: String!
     author: Author!
+    reviews: [UserReview]!
+    averageRating: Float!
     createdAt: String!
     updatedAt: String!
   }

@@ -103,6 +103,6 @@ export const authorResolver = {
         });
       }
       return author.book_count;
-    },
+    }
   },
 };

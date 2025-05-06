@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Author, Book } from "../datasource/models/index.js";
+import { Author, Book, userReview } from "../datasource/models/index.js";
 export const bookResolver = {
   Mutation: {
     createBook: async (_, { payload }) => await Book.create(payload),
@@ -85,6 +85,25 @@ export const bookResolver = {
         return await Author.findByPk(book.author_id)
       }
       return book.author
+    },
+    reviews: async (book) =>
+      userReview.find({ book_id: book.id }).sort({ createAt: -1 }),
+    averageRating: async (book) => {
+      const result = await userReview.aggregate([
+        {$match: { book_id: book.id}},
+        {
+          $group: {
+            _id: "$book_id",
+            averageRating: { $avg: '$rating'}
+          }
+        }
+      ])
+
+      if(result.length > 0){
+        return result[0].averageRating.toFixed(1)
+      } else {
+        return 0
+      }
     }
   }
 };
