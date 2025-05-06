@@ -25,11 +25,18 @@ export default gql`
     author_id: ID
   }
   
-  input BookInput {
+  input createBookInput {
     title: String!
     description: String
     published_date: String!
     author_id: ID!
+  }
+
+  input updateBookInput {
+    title: String
+    description: String
+    published_date: String
+    author_id: ID
   }
 
   extend type Query{
@@ -38,8 +45,8 @@ export default gql`
   }
 
   extend type Mutation{
-    createBook(payload: BookInput!): Book
-    updateBook(id: ID!, payload: BookInput!): Book
+    createBook(payload: createBookInput!): Book
+    updateBook(id: ID!, payload: updateBookInput!): Book
     deleteBook(id: ID!): DeleteResult
   }
 `
