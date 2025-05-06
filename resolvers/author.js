@@ -4,41 +4,38 @@ import { Author, Book } from "../datasource/models/index.js";
 export const authorResolver = {
   Mutation: {
     createAuthor: async (_, { payload }) => await Author.create(payload),
-    updateAuthor: async (_, {id,payload}) => {
-      const [count, authors] = await Author.update(
-        payload,
-        {
-          where: { id },
-          returning: true,
-        }
-      );
-      if(count > 0){
-        return authors[0].toJSON()
+    updateAuthor: async (_, { id, payload }) => {
+      const [count, authors] = await Author.update(payload, {
+        where: { id },
+        returning: true,
+      });
+      if (count > 0) {
+        return authors[0].toJSON();
       }
 
-      throw new Error("Author not found")
+      throw new Error("Author not found");
     },
-    deleteAuthor: async(_, {id}) =>{
+    deleteAuthor: async (_, { id }) => {
       const deletedRow = await Author.destroy({
-        where:{
-          id
-        }
-      })
+        where: {
+          id,
+        },
+      });
 
-      if(deletedRow > 0){
+      if (deletedRow > 0) {
         return {
           success: true,
           message: "author removed",
-          id: id
-        }
+          id: id,
+        };
       } else {
         return {
           success: false,
           message: "author not found",
-          id
-        }
+          id,
+        };
       }
-    }
+    },
   },
   Query: {
     author: async (_, { id }) => await Author.findByPk(id),
@@ -49,13 +46,13 @@ export const authorResolver = {
         where.name = { [Op.iLike]: `%${filter.name}%` };
       }
 
-      if (filter.born_before || filter.born_after) {
+      if (filter.born_date) {
         where.born_date = {};
-        if (filter.born_after) {
-          where.born_date[Op.gte] = new Date(filter.born_after);
+        if (filter.born_date.after) {
+          where.born_date[Op.gte] = new Date(filter.born_date.after);
         }
-        if (filter.born_before) {
-          where.born_date[Op.lte] = new Date(filter.born_before);
+        if (filter.born_date.before) {
+          where.born_date[Op.lte] = new Date(filter.born_date.before);
         }
       }
 
@@ -63,36 +60,49 @@ export const authorResolver = {
         where,
         limit,
         offset: (page - 1) * limit,
-        order: [['createdAt', 'DESC']],
-        group: ['Author.id'],
+        order: [["createdAt", "DESC"]],
+        group: ["Author.id"],
         subQuery: false,
-        include: [{
-          model: Book,
-          as: 'books',
-          attributes: [],
-        }],
+        include: [
+          {
+            model: Book,
+            as: "books",
+            attributes: [],
+          },
+        ],
         attributes: {
-          include: [
-            [fn('COUNT', col('books.id')), 'book_count']
-          ]
+          include: [[fn("COUNT", col("books.id")), "book_count"]],
         },
       });
-      const totalAuthors = await Author.count({where})
-      
+      const totalAuthors = await Author.count({ where });
 
       return {
-        authors: authors.map(author => {
+        authors: authors.map((author) => {
           const json = author.toJSON ? author.toJSON() : author;
-      
+
           return {
             ...json,
-            book_count: parseInt(json.book_count, 10) || 0
+            book_count: parseInt(json.book_count, 10) || 0,
           };
         }),
         totalPage: limit > 0 ? Math.ceil(totalAuthors / limit) : 0,
         currentPage: page,
-        currentLimit: limit
+        currentLimit: limit,
+      };
+    },
+  },
+  Author: {
+    book_count: async (author) => {
+      console.log("Triggered");
+      console.log(typeof author.book_count);
+      if (!author.book_count) {
+        return await Book.count({
+          where: {
+            author_id: author.id,
+          },
+        });
       }
+      return author.book_count;
     },
   },
 };

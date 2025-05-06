@@ -1,5 +1,6 @@
 import { Author } from "./author.js";
 import { Book } from "./book.js";
+import {userReview} from "./user_review.js"
 
 Author.hasMany(Book, {
   foreignKey: "author_id",
@@ -8,4 +9,4 @@ Author.hasMany(Book, {
 });
 Book.belongsTo(Author, { foreignKey: "author_id", as: "author" });
 
-export { Author, Book };
+export { Author, Book, userReview };

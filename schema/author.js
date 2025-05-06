@@ -19,8 +19,7 @@ export default gql`
   
   input AuthorFilter {
     name: String
-    born_after: String
-    born_before: String
+    born_date: DateFilter
   }
   
   input CreateAuthorInput {

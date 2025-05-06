@@ -19,8 +19,8 @@ export default gql`
   
   input BookFilter {
     title: String
-    published_before: String
-    published_after: String
+    published_date: DateFilter
+    author_id: ID
   }
   
   input BookInput {
@@ -31,13 +31,13 @@ export default gql`
   }
 
   extend type Query{
-    books(page: Int = 1, limit: Int = 10, filter: BookFilter): BookList
+    books(page: Int! = 1, limit: Int! = 10, filter: BookFilter): BookList
     book(id: ID!): Book
   }
 
   extend type Mutation{
-    createBook(input: BookInput!): Book
-    updatedBook(id: ID!, input: BookInput!): Book
+    createBook(payload: BookInput!): Book
+    updateBook(id: ID!, payload: BookInput!): Book
     deleteBook(id: ID!): DeleteResult
   }
 `

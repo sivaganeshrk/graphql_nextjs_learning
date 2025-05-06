@@ -2,7 +2,7 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import gqlSchema from "./schema/index.js";
 import resolvers from "./resolvers/index.js";
-import { sequelize, connectPostgres } from "./datasource/connectors/index.js";
+import { sequelize, connectPostgres, connectMongo } from "./datasource/connectors/index.js";
 import config from "./config.js"
 async function bootApplication() {
   try {
@@ -16,6 +16,7 @@ async function bootApplication() {
     apolloSever.applyMiddleware({ app });
 
     await connectPostgres();
+    await connectMongo()
 
     app.listen(config.app_port, ()=>{
       console.info(`Application Started: Forum prototype on http://localhost:${config.app_port}${apolloSever.graphqlPath}`)
