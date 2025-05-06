@@ -4,12 +4,14 @@ import gqlSchema from "./schema/index.js";
 import resolvers from "./resolvers/index.js";
 import { sequelize, connectPostgres, connectMongo } from "./datasource/connectors/index.js";
 import config from "./config.js"
+import { constraintDirective, constraintDirectiveTypeDefs } from 'graphql-constraint-directive';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 async function bootApplication() {
   try {
     const app = express();
+    const schema = constraintDirective()(makeExecutableSchema({ typeDefs:gqlSchema, resolvers }));
     const apolloSever = new ApolloServer({
-      typeDefs: gqlSchema,
-      resolvers,
+      schema,
       context: { sequelize },
     });
     await apolloSever.start()

@@ -25,7 +25,8 @@ export const userReviewResolver = {
     },
   },
   Query: {
-    userReviews: async (_, { book_id, page = 1, limit = 10 }) => {
+    userReviews: async (_, { book_id, paginationFilter = { page: 1, limit: 10 } }) => {
+      const {page, limit} = paginationFilter
       const [reviews, totalReviews] = await Promise.all([
         userReview
           .find({ book_id })
@@ -36,7 +37,7 @@ export const userReviewResolver = {
       ]);
       
       return {
-        reviews,
+        items: reviews,
         currentPage: page,
         currentLimit: limit,
         totalPage: limit > 0 ? Math.ceil(totalReviews / limit) : 0

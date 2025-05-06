@@ -13,40 +13,40 @@ export default gql`
   }
 
   type BookList {
-    books: [Book]!
+    items: [Book]!
     totalPage: Int
     currentPage: Int
     itemLimit: Int
   }
   
   input BookFilter {
-    title: String
+    title: String @constraint(minLength: 3)
     published_date: DateFilter
-    author_id: ID
+    author_id: ID @constraint(minLength: 26, maxLength: 26)
   }
   
   input createBookInput {
-    title: String!
-    description: String
-    published_date: String!
-    author_id: ID!
+    title: String! @constraint(minLength: 3)
+    description: String 
+    published_date: String! @constraint(pattern: "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})$")
+    author_id: ID! @constraint(minLength: 26, maxLength: 26)
   }
 
   input updateBookInput {
-    title: String
-    description: String
-    published_date: String
-    author_id: ID
+    title: String @constraint(minLength: 3)
+    description: String 
+    published_date: String @constraint(pattern: "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})$")
+    author_id: ID @constraint(minLength: 26, maxLength: 26)
   }
 
   extend type Query{
-    books(page: Int! = 1, limit: Int! = 10, filter: BookFilter): BookList
-    book(id: ID!): Book
+    books(paginationFilter: PaginationFilter, filter: BookFilter): BookList
+    book(id: ID! @constraint(minLength: 26, maxLength: 26)): Book
   }
 
   extend type Mutation{
     createBook(payload: createBookInput!): Book
-    updateBook(id: ID!, payload: updateBookInput!): Book
-    deleteBook(id: ID!): DeleteResult
+    updateBook(id: ID! @constraint(minLength: 26, maxLength: 26), payload: updateBookInput!): Book
+    deleteBook(id: ID! @constraint(minLength: 26, maxLength: 26)): DeleteResult
   }
 `

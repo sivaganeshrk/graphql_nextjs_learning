@@ -11,25 +11,25 @@ export default gql`
   }
   
   type UserReviewListing {
-    reviews: [UserReview]!
+    items: [UserReview]!
     totalPage: Int!
     currentPage: Int!
     currentLimit: Int!
   }
 
   input UserReviewInput {
-    book_id: String!
+    book_id: String! @constraint(minLength: 26, maxLength: 26)
     reviewerName: String
-    rating: Float!
+    rating: Float! @constraint( min:1, max:5 )
     comment: String
   }
   
   extend type Query {
-    userReviews(book_id: ID!, page: Int = 1, limit: Int! = 10): UserReviewListing
+    userReviews(book_id: ID!, paginationFilter: PaginationFilter): UserReviewListing
   }
   
   extend type Mutation {
     createUserReview(payload: UserReviewInput): UserReview
-    deleteUserReview(id: ID!): DeleteResult
+    deleteUserReview(id: ID! @constraint(minLength: 26, maxLength: 26)): DeleteResult
   }
 `

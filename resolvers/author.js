@@ -39,7 +39,11 @@ export const authorResolver = {
   },
   Query: {
     author: async (_, { id }) => await Author.findByPk(id),
-    authors: async (_, { page, limit, filter = {} }) => {
+    authors: async (
+      _,
+      { paginationFilter = { page: 1, limit: 10 }, filter = {} }
+    ) => {
+      const { page, limit } = paginationFilter;
       const where = {};
 
       if (filter.name) {
@@ -77,7 +81,7 @@ export const authorResolver = {
       const totalAuthors = await Author.count({ where });
 
       return {
-        authors: authors.map((author) => {
+        items: authors.map((author) => {
           const json = author.toJSON ? author.toJSON() : author;
 
           return {
@@ -93,8 +97,6 @@ export const authorResolver = {
   },
   Author: {
     book_count: async (author) => {
-      console.log("Triggered");
-      console.log(typeof author.book_count);
       if (!author.book_count) {
         return await Book.count({
           where: {
@@ -103,6 +105,6 @@ export const authorResolver = {
         });
       }
       return author.book_count;
-    }
+    },
   },
 };

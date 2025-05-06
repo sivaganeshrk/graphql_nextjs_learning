@@ -37,7 +37,8 @@ export const bookResolver = {
   },
   Query: {
     book: async (_, { id }) => await Book.findByPk(id),
-    books: async (_, { page, limit, filter = {} }) => {
+    books: async (_, { paginationFilter = { page: 1, limit: 10 }, filter = {} }) => {
+      const {page,limit} = paginationFilter
       const where = {};
 
       if (filter.title) {
@@ -72,7 +73,7 @@ export const bookResolver = {
       });
 
       return {
-        books,
+        items: books,
         totalPage: limit > 0 ? Math.ceil(totalBooks / limit): 0,
         currentPage: page,
         currentLimit: limit

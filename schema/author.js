@@ -11,37 +11,37 @@ export default gql`
   }
   
   type AuthorList {
-    authors: [Author]!
+    items: [Author]!
     totalPage: Int!
     currentPage: Int!
     currentLimit: Int!
   }
   
   input AuthorFilter {
-    name: String
+    name: String @constraint(minLength: 3)
     born_date: DateFilter
   }
   
   input CreateAuthorInput {
-    name: String!
-    biography: String
-    born_date: String!
+    name: String! @constraint(minLength: 4)
+    biography: String @constraint(minLength: 4)
+    born_date: String! @constraint(pattern: "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})$")
   }
   
   input UpdateAuthorInput {
-    name: String
+    name: String @constraint(minLength: 4)
     biography: String
-    born_date: String
+    born_date: String @constraint(pattern: "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})$")
   }
   
   extend type Query{
-    authors(page: Int! = 1, limit: Int! = 10, filter: AuthorFilter = {}): AuthorList
-    author(id: ID!): Author
+    authors(paginationFilter: PaginationFilter, filter: AuthorFilter = {}): AuthorList
+    author(id: ID! @constraint(minLength: 26, maxLength: 26)): Author
   }
 
   extend type Mutation{
     createAuthor(payload: CreateAuthorInput!): Author
-    updateAuthor(id: ID!, payload: UpdateAuthorInput!): Author
-    deleteAuthor(id: ID!): DeleteResult
+    updateAuthor(id: ID! @constraint(minLength: 26, maxLength: 26), payload: UpdateAuthorInput!): Author
+    deleteAuthor(id: ID! @constraint(minLength: 26, maxLength: 26)): DeleteResult
   }
 `
