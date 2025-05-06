@@ -1,14 +1,15 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import gqlSchema from "./schema/index.js";
+import resolvers from "./resolvers/index.js";
 import { sequelize, connectPostgres } from "./datasource/connectors/index.js";
 import config from "./config.js"
-
 async function bootApplication() {
   try {
     const app = express();
     const apolloSever = new ApolloServer({
       typeDefs: gqlSchema,
+      resolvers,
       context: { sequelize },
     });
     await apolloSever.start()
