@@ -1,5 +1,5 @@
 "use strict";
-import { sequelize } from "../connectors";
+import { sequelize } from "../connectors/index.js";
 import { ulid } from "ulid";
 module.exports = (sequelize, DataTypes) => {
   class Author extends sequelize.Model {

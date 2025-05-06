@@ -14,7 +14,8 @@ const config = {
   },
   mongo_uri: process.env.MONGO_url,
   log_level: process.env.LOG_LEVEL,
-  db_logs: process.env.ENABLE_DB_LOG === "true" ? true: false
+  db_logs: process.env.ENABLE_DB_LOG === "true" ? true: false,
+  app_port: process.env.APP_PORT || 5003
 }
 
 module.exports = config

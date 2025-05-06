@@ -1,2 +1,2 @@
-export * from  "./mongoose.config"
-export * as sequelizeConfig from  "./sequelize.config"
+export * from  "./mongoose.config.js"
+export * as sequelizeConfig from  "./sequelize.config.js"

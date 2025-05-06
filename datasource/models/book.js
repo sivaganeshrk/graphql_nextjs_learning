@@ -1,9 +1,8 @@
 "use strict";
-import { Model } from "sequelize";
-import { Author } from "./author";
+import { sequelize } from "../connectors/index.js";
 import { ulid } from "ulid";
 export default (sequelize, DataTypes) => {
-  class Book extends Model {
+  class Book extends sequelize.Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

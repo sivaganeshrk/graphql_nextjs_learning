@@ -1,2 +1,2 @@
-export * from "./mongo"
-export * as sequelize from "./postgres"
+export * from "./mongo.js"
+export * from "./postgres.js"

@@ -7,7 +7,8 @@
     "sequelize": "./node_modules/.bin/sequelize",
     "model:generation": "npm run sequelize -- model:generate",
     "db:migrate": "npm run sequelize -- db:migrate",
-    "db:seed": "npm run sequelize -- db:seed:all"
+    "db:seed": "npm run sequelize -- db:seed:all",
+    "start:dev": "nodemon server.js"
   },
   "author": "Siva",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "ulid": "^3.0.0"
   },
   "devDependencies": {
+    "nodemon": "^3.1.10",
     "sequelize-cli": "^6.6.2"
   }
 }
