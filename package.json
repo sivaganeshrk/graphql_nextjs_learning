@@ -8,6 +8,9 @@
     "model:generation": "npm run sequelize -- model:generate",
     "db:migrate": "npm run sequelize -- db:migrate",
     "db:seed": "npm run sequelize -- db:seed:all",
+    "seed:generate": "npm run sequelize -- seed:generate --name",
+    "db:seed:all": "npm run sequelize -- db:seed:all",
+    "db:seed:undo:all": "npm run sequelize -- db:seed:undo:all",
     "start:dev": "nodemon server.js"
   },
   "author": "Siva",
