@@ -18,8 +18,8 @@ const baseSchema = gql`
   }
 
   input PaginationFilter {
-    page: Int @constraint(min:1)
-    limit: Int @constraint(min:10)
+    page: Int! = 1 @constraint(min:1)
+    limit: Int! = 10 @constraint(min:10)
   }
   
   type Query {

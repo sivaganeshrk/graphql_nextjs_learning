@@ -17,7 +17,6 @@ try {
 }
 
 const schema = constraintDirective()(makeExecutableSchema({typeDefs: gqlSchema, resolvers}))
-console.log(config.graphql_schema_introspection);
 const apolloSever = new ApolloServer({
   schema,
   introspection: config.graphql_schema_introspection

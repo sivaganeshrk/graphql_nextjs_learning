@@ -15,7 +15,9 @@ const config = {
   mongo_url: process.env.MONGODB_URL,
   log_level: process.env.LOG_LEVEL,
   db_logs: process.env.ENABLE_DB_LOG === "true" ? true: false,
-  app_port: process.env.APP_PORT || 5003
+  app_port: process.env.APP_PORT || 5003,
+  use_https: process.env.USE_HTTPS === "true" ? true: false,
+  graphql_url: `${ this.use_https ? 'https' : 'http' }://${process.env.NEXT_PUBLIC_GRAPHQL_URL}/api/graphql`
 }
 
 module.exports = config

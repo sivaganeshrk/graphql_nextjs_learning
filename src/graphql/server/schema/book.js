@@ -18,9 +18,9 @@ export default gql`
 
   type BookList {
     items: [Book]!
-    totalPage: Int
-    currentPage: Int
-    itemLimit: Int
+    totalPage: Int!
+    currentPage: Int!
+    currentLimit: Int!
   }
   
   input BookFilter {

@@ -28,7 +28,7 @@ const CreateOrEditBookModel = ({ book, onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-xs flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white p-6 rounded-lg w-full max-w-md relative">
+      <div className="bg-white p-6 rounded-lg w-full max-w-md relative" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-600 hover:text-red-500 text-2xl"

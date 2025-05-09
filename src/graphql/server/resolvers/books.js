@@ -95,7 +95,7 @@ export const bookResolver = {
         {
           $group: {
             _id: "$book_id",
-            totalReview: {sum: "$1"},
+            totalReview: {$sum: 1},
             averageRating: { $avg: '$rating'}
           }
         }
