@@ -19,13 +19,13 @@ export default gql`
 
   input UserReviewInput {
     book_id: String! @constraint(minLength: 26, maxLength: 26)
-    reviewerName: String
+    username: String
     rating: Float! @constraint( min:1, max:5 )
     comment: String
   }
   
   extend type Query {
-    userReviews(book_id: ID!, paginationFilter: PaginationFilter): UserReviewListing
+    userReviews(book_id: ID! @constraint(minLength: 26, maxLength: 26), paginationFilter: PaginationFilter): UserReviewListing
   }
   
   extend type Mutation {

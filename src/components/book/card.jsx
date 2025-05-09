@@ -1,5 +1,6 @@
-import Link from "next/link";
+'use client'
 import ReactStars from "react-stars";
+import Link from "next/link";
 
 export default function BookCard({ book }) {
   return (

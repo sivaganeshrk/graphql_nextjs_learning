@@ -14,7 +14,9 @@ const BookPage = () => {
   const [bookFilter, setBookFilter] = useState({})
 
   const {loading, data} = useQuery(GET_BOOK_LISTING,{
-    variables: {paginationFilter, filter: bookFilter}
+    variables: {paginationFilter, filter: bookFilter},
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
   })
   
   if(loading) return <Spinner/>

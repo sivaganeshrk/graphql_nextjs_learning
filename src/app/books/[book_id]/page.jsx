@@ -1,47 +1,69 @@
+'use client'
 import BookDetailed from "@/components/book/detailed";
 import AuthorDetailed from "@/components/author/detailed";
 import CreateOrEditBookModelWrapper from "@/components/book/model_wrapper";
 import DeleteConfirmationModel from "@/components/delete_confr_model";
 import ReviewCard from "@/components/review/card";
-const BookDetailedPage = async ({ params }) => {
-  const { book_id } = await params;
-  const book = {
-    title: "Sample",
-    description: "sample",
-    published_date: "2025-05-07",
-  };
-  const author = {
-    name: "Sample",
-    biography: "Sample",
-    born_date: "2022-06-03",
-    books_count: 4,
-  };
+import { useState, use } from "react";
+import { DELETE_BOOK, GET_BOOK, GET_BOOK_LISTING } from "@/graphql/client/book";
+import Spinner from "@/components/spinner";
+import { useMutation, useQuery } from "@apollo/client"
+import {useRouter} from "next/navigation"
+import apolloClient from "@/graphql/client/client";
+import AddReviewModel from "@/components/review/model";
+
+const BookDetailedPage = ({ params }) => {
+  const { book_id } = use(params);
+  const router = useRouter()
+  const [paginationFilter, setPaginationFilter] = useState({
+    page:1,
+    limit:10
+  })
+  const {loading, data} = useQuery(GET_BOOK, {
+    variables: {paginationFilter, bookId: book_id, id:book_id},
+  })
+
+  const [deleteBook, DeleteBookEvent] = useMutation(DELETE_BOOK,
+    {refetchQueries: [{query: GET_BOOK_LISTING}]}
+  )
+
+  const handleDelete = async() =>{
+    await deleteBook({variables:{id:book_id}})
+    apolloClient.cache.evict({
+      id:'Books'
+    })
+    router.push("/books")
+  }
+
+  if(loading || DeleteBookEvent.loading) return <Spinner />
+
   return (
-    <div className="px-5 py-20">
-      <div className="absolute top-6 right-5">
+    <div className="px-5 py-5">
+      <div className="py-5">
         <div className="flex justify-end gap-3">
           <CreateOrEditBookModelWrapper
-            book={book}
-            refreshPageOnSuccess={false}
+            book={{...data.book, author_id: data.book.author.id}}
+            refreshPageOnSuccess={true}
           />
-          <DeleteConfirmationModel />
+          <DeleteConfirmationModel onConfirm={handleDelete}/>
         </div>
       </div>
       <div className="pl-5">
-        <BookDetailed book={book} />
+        <BookDetailed book={data.book} />
       </div>
       <div className="pl-5">
-        <AuthorDetailed author={author} />
+        <AuthorDetailed author={data.book.author} />
       </div>
       <div className="pl-5">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold">Reviews</h1>
-          "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-34
-          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-34">
-            + Add Review
-          </button>
+          <h1 className="text-3xl font-bold text-white">Reviews</h1>
+          <AddReviewModel book_id={book_id}/>
         </div>
-        <ReviewCard />
+        {
+          data.userReviews.items.map((review)=>(
+            <ReviewCard key={review.id} review={review}/>
+          ))
+        }
       </div>
     </div>
   );
