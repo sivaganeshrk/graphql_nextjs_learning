@@ -2,8 +2,8 @@
 import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CreateOrEditBookModel from "./model";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_BOOK, UPDATE_BOOK } from "@/graphql/client/book";
+import { useMutation } from "@apollo/client";
+import { CREATE_BOOK, UPDATE_BOOK } from "@/graphql/client/book";
 import apolloClient from "@/graphql/client/client";
 import Spinner from "../spinner";
 
@@ -20,13 +20,17 @@ const CreateOrEditBookModelWrapper = ({ book, refreshPageOnSuccess = true, onSuc
   }, [openModel]);
 
   const [updateBook, updateEvent] = useMutation(UPDATE_BOOK)
+  const [createBook, createBookEvent] = useMutation(CREATE_BOOK)
 
   const handleSubmit = async(payload) => {
-    await updateBook({variables:{id:book.id, payload}})
-    apolloClient.cache.evict({ id: `Book:${book.id}` })
+    if(book){
+      await updateBook({variables:{id:book.id, payload}})
+      apolloClient.cache.evict({ id: `Book:${book.id}` })
+    } else {
+      await createBook({variables:{payload}})
+    }
     setOpenModel(false);
-    if(refreshPageOnSuccess){ 
-
+    if(refreshPageOnSuccess){
       router.refresh()
     } else {
       onSuccess(book)

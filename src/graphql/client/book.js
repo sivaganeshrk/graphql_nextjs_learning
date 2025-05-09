@@ -79,4 +79,11 @@ export const DELETE_BOOK = gql`
       id
     }
   }
-`
+`;
+export const CREATE_BOOK = gql`
+  mutation CreateBook($payload: createBookInput!) {
+    createBook(payload: $payload) {
+      id
+    }
+  }
+`;
