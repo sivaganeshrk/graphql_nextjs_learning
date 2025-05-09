@@ -1,4 +1,4 @@
-import {gql} from 'apollo-server-express'
+import {gql} from '@apollo/client'
 export default gql`
   type Author {
     id: ID!

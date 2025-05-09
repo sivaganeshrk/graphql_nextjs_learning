@@ -1,5 +1,5 @@
 import { Op, fn, col } from "sequelize";
-import { Author, Book } from "../datasource/models/index.js";
+import { Author, Book } from "@/datasource/models";
 
 export const authorResolver = {
   Mutation: {

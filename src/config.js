@@ -11,6 +11,7 @@ const config = {
     port: process.env.PG_PORT,
     database: process.env.PG_DATABASE
   },
+  graphql_schema_introspection: process.env.GRAPHQL_SCHEMA_INTROSPECTION === "true" ? true : false,
   mongo_url: process.env.MONGODB_URL,
   log_level: process.env.LOG_LEVEL,
   db_logs: process.env.ENABLE_DB_LOG === "true" ? true: false,

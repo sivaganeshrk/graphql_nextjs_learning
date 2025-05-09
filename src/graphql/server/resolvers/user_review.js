@@ -1,4 +1,4 @@
-import { userReview } from "../datasource/models/index.js";
+import { userReview } from "@/datasource/models";
 
 export const userReviewResolver = {
   Mutation: {

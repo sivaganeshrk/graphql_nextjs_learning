@@ -1,5 +1,9 @@
-import {gql} from 'apollo-server-express'
+import {gql} from '@apollo/client'
 export default gql`
+  type Rating {
+    averageRating: Float!
+    totalReview: Int!
+  }
   type Book {
     id: ID!
     title: String!
@@ -7,7 +11,7 @@ export default gql`
     published_date: String!
     author: Author!
     reviews: [UserReview]!
-    averageRating: Float!
+    rating: Rating!
     createdAt: String!
     updatedAt: String!
   }

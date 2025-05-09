@@ -1,4 +1,4 @@
-import {gql} from 'apollo-server-express'
+import {gql} from '@apollo/client'
 import authorSchema from "./author.js"
 import bookSchema from "./book.js"
 import userReviewSchema from "./user_review.js"
