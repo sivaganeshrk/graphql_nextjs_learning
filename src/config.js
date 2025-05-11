@@ -2,7 +2,13 @@
 const dotenv = require("dotenv")
 
 dotenv.config()
-
+console.log({
+  username: process.env.PG_USERNAME,
+  password: process.env.PG_PASSWORD,
+  hostname: process.env.PG_HOSTNAME,
+  port: process.env.PG_PORT,
+  database: process.env.PG_DATABASE
+})
 const config = {
   pg: {
     username: process.env.PG_USERNAME,
@@ -16,8 +22,7 @@ const config = {
   log_level: process.env.LOG_LEVEL,
   db_logs: process.env.ENABLE_DB_LOG === "true" ? true: false,
   app_port: process.env.APP_PORT || 5003,
-  use_https: process.env.USE_HTTPS === "true" ? true: false,
-  graphql_url: `${ this.use_https ? 'https' : 'http' }://${process.env.NEXT_PUBLIC_GRAPHQL_URL}/api/graphql`
+  graphql_url: `${ process.env.USE_HTTPS === "true" ? 'https' : 'http' }://${process.env.NEXT_PUBLIC_GRAPHQL_URL}/api/graphql`
 }
 
 module.exports = config
