@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white">
       <section className="bg-blue-700 text-white py-20 px-6 text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4">📚 BookVault</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">📚 BookShelf</h1>
         <p className="text-lg sm:text-xl max-w-2xl mx-auto">
           Explore, review, and manage your favorite books and authors — all in one place.
         </p>
