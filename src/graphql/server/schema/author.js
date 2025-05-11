@@ -24,7 +24,7 @@ export default gql`
   
   input CreateAuthorInput {
     name: String! @constraint(minLength: 4)
-    biography: String @constraint(minLength: 4)
+    biography: String
     born_date: String! @constraint(pattern: "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})$")
   }
   

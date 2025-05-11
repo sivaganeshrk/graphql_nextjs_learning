@@ -50,7 +50,7 @@ const CreateOrEditBookModelWrapper = ({ book, refreshPageOnSuccess = true, onSuc
           book={book}
           onClose={() => setOpenModel(false)}
           onSubmit={handleSubmit}
-          loading={updateEvent.loading}
+          loading={updateEvent.loading || createBookEvent.loading}
         />
       )}
     </div>

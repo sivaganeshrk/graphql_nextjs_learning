@@ -29,9 +29,6 @@ const BookDetailedPage = ({ params }) => {
 
   const handleDelete = async() =>{
     await deleteBook({variables:{id:book_id}})
-    apolloClient.cache.evict({
-      id:'Books'
-    })
     router.push("/books")
   }
 

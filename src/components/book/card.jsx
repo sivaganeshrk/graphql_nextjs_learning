@@ -1,20 +1,22 @@
-'use client'
+"use client";
 import ReactStars from "react-stars";
 import Link from "next/link";
 
-export default function BookCard({ book }) {
+export default function BookCard({ book, showAuthor = true }) {
   return (
     <div className="max-w-xs w-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
       <div className="p-1">
         <h3 className="text-lg font-medium text-gray-900 break-words">
           {book.title}
         </h3>
-        <p className="text-sm font-medium text-gray-900 truncate pt-1.5">
-          Author:{" "}
-          <Link className="text-blue-700" href={`/authors/${book.author.id}`}>
-            {book.author.name}
-          </Link>
-        </p>
+        {showAuthor && (
+          <p className="text-sm font-medium text-gray-900 truncate pt-1.5">
+            Author:{" "}
+            <Link className="text-blue-700" href={`/authors/${book.author.id}`}>
+              {book.author.name}
+            </Link>
+          </p>
+        )}
         <div className="flex items-center gap-x-1 text-sm font-medium text-gray-900 pt-1.5 pb-1.5">
           <span>Review:</span>
           <ReactStars

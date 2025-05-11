@@ -21,6 +21,10 @@ const BookPage = () => {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only'
   })
+  
+  const handleSuccess = async() =>{
+    await refetch({ paginationFilter, filter:bookFilter })
+  }
 
   const handlePageChange = async (pageNumber) => {
     setPaginationFilter({...paginationFilter, page:pageNumber})
@@ -36,12 +40,6 @@ const BookPage = () => {
     setBookFilter(filter)
     await handleSuccess()
   }
-
-
-  const handleSuccess = async() =>{
-    await refetch({ paginationFilter, filter:bookFilter })
-  }
-
   
   if(loading) return <Spinner/>
   return (
