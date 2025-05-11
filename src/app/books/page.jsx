@@ -5,11 +5,13 @@ import { GET_BOOK_LISTING } from "@/graphql/client/book";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import CreateOrEditBookModelWrapper from "@/components/book/model_wrapper";
+import BookFilter from "@/components/book/filter";
+import Pagination from "@/components/pagination";
 
 const BookPage = () => {
   const [paginationFilter, setPaginationFilter] = useState({
     page: 1,
-    limit: 100
+    limit: 10
   })
 
   const [bookFilter, setBookFilter] = useState({})
@@ -20,8 +22,24 @@ const BookPage = () => {
     nextFetchPolicy: 'network-only'
   })
 
+  const handlePageChange = async (pageNumber) => {
+    setPaginationFilter({...paginationFilter, page:pageNumber})
+    await handleSuccess()
+  }
+
+  const handlePagelimitChange = async (pageLimit) => {
+    setPaginationFilter({...paginationFilter, limit:pageLimit})
+    await handleSuccess()
+  }
+
+  const handleFilterChange = async (filter) => {
+    setBookFilter(filter)
+    await handleSuccess()
+  }
+
+
   const handleSuccess = async() =>{
-    await refetch()
+    await refetch({ paginationFilter, filter:bookFilter })
   }
 
   
@@ -32,6 +50,7 @@ const BookPage = () => {
       <div className="text-2xl font-bold mb-6 text-white">Book Collection</div>
       <CreateOrEditBookModelWrapper onSuccess={handleSuccess} refreshPageOnSuccess={false}/>
       </div>
+      <BookFilter filter={bookFilter} onApply={handleFilterChange}/>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {
         data.books.items.map((book)=>(
@@ -39,6 +58,7 @@ const BookPage = () => {
         ))
       }
       </div>
+      <Pagination currentPage={data.books.currentPage} totalPage={data.books.totalPage} currentLimit={data.books.currentLimit} onPageChange={handlePageChange} onPageLimitChange={handlePagelimitChange}/>
       </div>
   )
 }
