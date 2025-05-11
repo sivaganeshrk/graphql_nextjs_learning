@@ -2,20 +2,13 @@
 const dotenv = require("dotenv")
 
 dotenv.config()
-console.log({
-  username: process.env.PG_USERNAME,
-  password: process.env.PG_PASSWORD,
-  hostname: process.env.PG_HOSTNAME,
-  port: process.env.PG_PORT,
-  database: process.env.PG_DATABASE
-})
 const config = {
   pg: {
-    username: process.env.PG_USERNAME,
-    password: process.env.PG_PASSWORD,
-    hostname: process.env.PG_HOSTNAME,
+    username: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    hostname: process.env.PGHOST,
     port: process.env.PG_PORT,
-    database: process.env.PG_DATABASE
+    database: process.env.PGDATABASE
   },
   graphql_schema_introspection: process.env.GRAPHQL_SCHEMA_INTROSPECTION === "true" ? true : false,
   mongo_url: process.env.MONGODB_URL,
