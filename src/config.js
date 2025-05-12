@@ -1,15 +1,9 @@
-// import dotenv from "dotenv"
+
 const dotenv = require("dotenv")
 
 dotenv.config()
 const config = {
-  pg: {
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    hostname: process.env.PGHOST,
-    port: process.env.PG_PORT,
-    database: process.env.PGDATABASE
-  },
+  postgres_url: process.env.POSTGRES_URL,
   graphql_schema_introspection: process.env.GRAPHQL_SCHEMA_INTROSPECTION === "true" ? true : false,
   mongo_url: process.env.MONGODB_URL,
   log_level: process.env.LOG_LEVEL,

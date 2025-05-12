@@ -2,9 +2,7 @@ import { Sequelize } from "sequelize";
 import {sequelizeConfig} from "../config/index.js";
 
 export const sequelize = new Sequelize(
-  sequelizeConfig.default.database,
-  sequelizeConfig.default.username,
-  sequelizeConfig.default.password,
+  sequelizeConfig.default.url,
   sequelizeConfig.default
 );
 
