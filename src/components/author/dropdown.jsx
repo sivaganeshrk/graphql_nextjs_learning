@@ -21,19 +21,25 @@ const AuthorSelect = ({ selected = '' ,onSelect }) => {
     }
   }
 
-  if(error) return <p>Loading Failed</p>
-  if(loading) return <Spinner/>
+  // if(error) return <p>Loading Failed</p>
+  // if(loading) return <Spinner/>
   return (
     <div className='w-full'>
       <select name="author" id="author" value={selected} onChange={(e)=> onSelect(e.target.value)} onFocus={handleFocus} className='w-full border px-3 py-2 rounded'>
-        <option value="">-- Choose an author --</option>
-        {
-          data?.authors?.items?.map((author) =>(
+      <option value=''>
+      {error
+            ? 'Failed to load authors'
+            : loading
+            ? 'Loading authors...'
+            : '-- Choose an author --'}
+        </option>
+        {!loading &&
+          !error &&
+          data?.authors?.items?.map((author) => (
             <option key={author.id} value={author.id}>
               {author.name}
             </option>
-          ))
-        }
+          ))}
       </select>
     </div>
   )
