@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Providers from "@/components/providers";
 import Config from "@/config"
+import { Toaster } from 'react-hot-toast'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
+        <Toaster position="top-right" />
         <Providers url={Config.graphql_url}>{children}</Providers>
       </body>
     </html>

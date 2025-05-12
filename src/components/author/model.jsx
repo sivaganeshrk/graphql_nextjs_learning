@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_AUTHOR, UPDATE_AUTHOR,GET_AUTHORS_LISTING, GET_AUTHORS_DROPDOWN } from "@/graphql/client/author";
 import moment from "moment";
 import Spinner from "../spinner";
+import toast from 'react-hot-toast'
 
 const CreateOrEditAuthorModel = ({
   author,
@@ -42,10 +43,14 @@ const CreateOrEditAuthorModel = ({
 
   const [updateAuthor, updateAuthorEvent] = useMutation(UPDATE_AUTHOR,{
     refetchQueries: [{ query: GET_AUTHORS_LISTING },{query: GET_AUTHORS_DROPDOWN}],
+    onCompleted: () => toast.success("Updated Author"),
+    onError: () => toast.error("Update Author Failed")
   }
   );
   const [createAuthor, createAuthorEvent] = useMutation(CREATE_AUTHOR,{
     refetchQueries: [{ query: GET_AUTHORS_LISTING },{query: GET_AUTHORS_DROPDOWN}],
+    onCompleted: () => toast.success("Created Author"),
+    onError: () => toast.error("Create Author Failed")
   });
 
   const loading = createAuthorEvent.loading || updateAuthorEvent.loading;
@@ -57,6 +62,10 @@ const CreateOrEditAuthorModel = ({
       await updateAuthor({ variables: { author_id: author.id, payload: form } });
     } else {
       await createAuthor({ variables: { payload: form } });
+    }
+
+    if(createAuthorEvent.error || updateAuthorEvent.error){
+      return 
     }
 
     if (refreshPageOnSuccess) {

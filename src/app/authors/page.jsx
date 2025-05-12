@@ -16,7 +16,7 @@ const AuthorPage = () => {
 
   const [filter, setFilter] = useState({})
 
-  const {loading, data, refetch} = useQuery(GET_AUTHORS_LISTING,{
+  const {loading, data, refetch, error} = useQuery(GET_AUTHORS_LISTING,{
     variables: { paginationFilter, filter: filter },
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only'

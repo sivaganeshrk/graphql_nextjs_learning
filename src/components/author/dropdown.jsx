@@ -41,6 +41,7 @@ const AuthorSelect = ({ selected = '', onSelect }) => {
   return (
     <div className='relative w-full' ref={dropdownRef}>
       <button
+        type='button'
         className='w-50 border px-3 py-2 rounded text-left bg-white'
         onClick={() => {
           setOpen(!open)
