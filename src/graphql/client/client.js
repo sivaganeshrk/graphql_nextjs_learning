@@ -1,5 +1,5 @@
 import config from "@/config"
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
+import { ApolloClient, InMemoryCache } from "@apollo/client"
 
 const apolloClient = new ApolloClient({
   uri: config.graphql_url,

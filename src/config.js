@@ -9,7 +9,7 @@ const config = {
   log_level: process.env.LOG_LEVEL,
   db_logs: process.env.ENABLE_DB_LOG === "true" ? true: false,
   app_port: process.env.APP_PORT || 5003,
-  graphql_url: `${ process.env.USE_HTTPS === "true" ? 'https' : 'http' }://${process.env.NEXT_PUBLIC_GRAPHQL_URL}/api/graphql`
+  graphql_url: `${ process.env.USE_HTTPS === "true" ? 'https' : 'http' }://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/api/graphql`
 }
 
 module.exports = config
