@@ -22,7 +22,7 @@ const AddReviewModel = ({ book_id }) => {
 
   const [form, setForm] = useState({
     username: "",
-    rating: 0,
+    rating: 1,
     comment: "",
     book_id,
   });
