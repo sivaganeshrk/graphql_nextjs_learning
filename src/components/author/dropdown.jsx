@@ -11,7 +11,7 @@ const AuthorSelect = ({ selected = '', onSelect }) => {
 
   const { data, loading, error, refetch } = useQuery(GET_AUTHORS_DROPDOWN, {
     variables: { paginationFilter: { page: 1, limit: 200 } },
-    skip: !open,
+    // skip: !open,
     fetchPolicy: 'network-only',
   })
 
@@ -45,7 +45,7 @@ const AuthorSelect = ({ selected = '', onSelect }) => {
         className='w-50 border px-3 py-2 rounded text-left bg-white'
         onClick={() => {
           setOpen(!open)
-          if (!open) refetch()
+          // if (!open) refetch()
         }}
       >
         {selected
