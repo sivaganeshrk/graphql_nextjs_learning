@@ -3,7 +3,6 @@ import { userReview } from "@/datasource/models";
 export const userReviewResolver = {
   Mutation: {
     createUserReview: async (_, { payload }) => {
-      console.log(payload)
       payload.username = payload.username || "Anonymous";
       return await userReview.create(payload);
     },

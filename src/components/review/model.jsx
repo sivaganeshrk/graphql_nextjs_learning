@@ -34,7 +34,6 @@ const AddReviewModel = ({ book_id }) => {
   };
 
   const handleSubmit = async () => {
-    console.log(form);
     await createReview({variables:{payload: form}});
     apolloClient.cache.evict({ id: `Book:${book_id}` });
     setOpenModel(false);

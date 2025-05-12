@@ -24,7 +24,6 @@ const CreateOrEditAuthorModel = ({
 
   useEffect(() => {
     if (author) {
-      console.log(author);
       setForm({
         name: author.name,
         biography: author.biography,
