@@ -1,8 +1,14 @@
-'use client'
-import { ApolloProvider } from '@apollo/client'
+"use client";
+import { ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
-const Providers = ({ client, children }) => {
-    return <ApolloProvider client={client}>{children}</ApolloProvider>
-}
+const Providers = ({ url, children }) => {
+  const apolloClient = new ApolloClient({
+    uri: url,
+    cache: new InMemoryCache(),
+  });
 
-export default Providers
+  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
+};
+
+export default Providers;
