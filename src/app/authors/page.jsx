@@ -42,6 +42,7 @@ const AuthorPage = () => {
   }
 
   if(loading) return <Spinner/>
+  if(error) return <ErrorPage onRetry={handleSuccess}/>
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="flex justify-between items-center mb-4">

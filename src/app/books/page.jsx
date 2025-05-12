@@ -7,6 +7,7 @@ import { useState } from "react";
 import CreateOrEditBookModelWrapper from "@/components/book/model_wrapper";
 import BookFilter from "@/components/book/filter";
 import Pagination from "@/components/pagination";
+import ErrorPage from "@/components/error";
 
 const BookPage = () => {
   const [paginationFilter, setPaginationFilter] = useState({
@@ -16,7 +17,7 @@ const BookPage = () => {
 
   const [bookFilter, setBookFilter] = useState({});
 
-  const { loading, data, refetch } = useQuery(GET_BOOK_LISTING, {
+  const { loading, data, refetch, error } = useQuery(GET_BOOK_LISTING, {
     variables: { paginationFilter, filter: bookFilter },
     fetchPolicy: "network-only",
     nextFetchPolicy: "network-only",
@@ -40,6 +41,8 @@ const BookPage = () => {
     setBookFilter(filter);
     await handleSuccess();
   };
+
+  if(error) <ErrorPage onRetry={handleSuccess}/>
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">

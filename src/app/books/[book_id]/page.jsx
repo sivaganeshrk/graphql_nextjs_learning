@@ -19,7 +19,7 @@ const BookDetailedPage = ({ params }) => {
     page:1,
     limit:10
   })
-  const {loading, data} = useQuery(GET_BOOK, {
+  const {loading, data, error, refetch} = useQuery(GET_BOOK, {
     variables: {paginationFilter, bookId: book_id, id:book_id},
   })
 
@@ -33,6 +33,7 @@ const BookDetailedPage = ({ params }) => {
   }
 
   if(loading || DeleteBookEvent.loading) return <Spinner />
+  if(error) <ErrorPage onRetry={refetch}/>
 
   return (
     <div className="px-5 py-5">

@@ -14,6 +14,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
 import Pagination from "@/components/pagination";
+import ErrorPage from "@/components/error";
 
 const AuthorDetailedPage = ({ params }) => {
   const { author_id } = use(params);
@@ -27,7 +28,7 @@ const AuthorDetailedPage = ({ params }) => {
     authorId: author_id,
     filter: { author_id },
   };
-  const { loading, data, refetch } = useQuery(GET_AUTHOR, {
+  const { loading, data, refetch, error} = useQuery(GET_AUTHOR, {
     variables: getAuthorReqPayload,
   });
 
@@ -56,6 +57,7 @@ const AuthorDetailedPage = ({ params }) => {
 
 
   if (loading || deleteAuthorEvent.loading) return <Spinner />;
+  if(error) <ErrorPage onRetry={refetch}/>
 
   return (
     <div className="px-5 py-5">
